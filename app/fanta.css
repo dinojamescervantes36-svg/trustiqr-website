@@ -1,0 +1,219 @@
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* logo left, menu right */
+  align-items: center;
+  padding: 20px 80px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Right side container */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* space between menu and button */
+}
+
+/* Menu list */
+.nav-right ul {
+  display: flex;
+  list-style: none;
+  gap: 35px; /* space between Features, About, Contact */
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+/* Menu links */
+.nav-right ul li a {
+  text-decoration: none;
+  color: #2f3e46;
+  font-weight: 500;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+/* Get Started button */
+.navbar .btn {
+  background: #2e8b57;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.navbar .btn:hover {
+  background: #256f47;
+}
+
+
+/* Hero */
+.hero .btn-primary {
+  background:#2e8b57;
+  color:white;
+  padding:14px 28px;
+  border-radius:8px;
+  font-weight:600;
+  box-shadow:0 4px 10px rgba(46,139,87,0.3);
+  transition:all 0.3s ease;
+}
+
+.hero .btn-primary:hover {
+  background:#256f47;
+  transform:translateY(-2px);
+  box-shadow:0 6px 14px rgba(46,139,87,0.4);
+}
+
+.hero .btn-secondary {
+  background: #f1f3f5;   /* light gray */
+  color: #111;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.hero .btn-secondary:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.hero .hero-text {
+  max-width: 620px;
+}
+
+.hero h1 {
+  font-size: 52px;          /* Bigger like image */
+  font-weight: 700;
+  line-height: 1.15;
+  color: #1f2d3d;           /* Dark navy tone like image */
+  margin-bottom: 24px;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #6c757d;           /* Soft gray like image */
+  margin-bottom: 35px;
+  max-width: 540px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 120px 80px;
+  gap: 60px;
+}
+
+/* Logo container */
+.navbar .logo {
+  display: flex;
+  align-items: center; /* vertical alignment */
+  gap: 10px;           /* space between logo and text */
+  font-weight: 700;
+  font-size: 24px;
+  color: #1f2d3d;      /* dark color like image */
+  text-decoration: none;
+}
+
+/* Logo image */
+.navbar .logo img {
+  height: 42px;       /* adjust size like image */
+  width: auto;
+}
+
+
+
+
+
+
+.hero {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:80px 50px;
+}
+
+.hero img {
+  max-width:500px;
+}
+
+/* FEATURES SECTION */
+.features {
+  padding: 80px 45px;
+  text-align: center;
+  background: #f8f9fb6e;
+}
+
+.features-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2d3d;
+  margin-bottom: 60px;
+}
+
+/* Horizontal layout for feature cards */
+.feature-cards {
+  display: flex;
+  justify-content: center; /* center cards horizontally */
+  gap: 40px;               /* space between cards */
+  flex-wrap: wrap;         /* wrap on small screens */
+}
+
+/* Each card */
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 25px;
+  width: 300px;             /* smaller like image */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.feature-card img {
+  height: 60px;
+  margin-bottom: 20px;       /* icon on top */
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2e8b57;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* Hover effect */
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Responsive: stack cards vertically on smaller screens */
+@media (max-width: 992px) {
+  .feature-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .feature-card {
+    width: 90%; /* full width on mobile */
+  }
+}

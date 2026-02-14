@@ -1,0 +1,101 @@
+body, html, #__next {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #f2f2f2;
+  position: relative;
+}
+
+/* 🔹 Brand moved to upper-left */
+.brand {
+  position: fixed;
+  top: 20px;
+  left: 25px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.brand .trust { color: #1f6fd6; }
+.brand .qr { color: #2fa46f; }
+
+.box {
+  background: white;
+  padding: 35px;
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+h2 {
+  color: #555;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2fa46f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 18px;
+  font-size: 18px;
+  border-radius: 6px;
+}
+
+button:hover {
+  background: #125537;
+}
+
+.switch {
+  margin-top: 18px;
+  font-size: 15px;
+}
+
+.switch span {
+  color: #1f6fd6;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#error-msg {
+  color: red;
+  font-size: 14px;
+  display: none;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
