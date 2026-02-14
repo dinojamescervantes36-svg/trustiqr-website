@@ -203,97 +203,59 @@
 /* ============================= */
 /* 📱 MOBILE RESPONSIVE DESIGN */
 /* ============================= */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
-  /* GLOBAL */
   body {
     overflow-x: hidden;
   }
 
   /* NAVBAR */
   .navbar {
-    padding: 14px 20px;
+    padding: 14px 16px;
   }
 
-  .navbar .logo {
-    font-size: 20px;
-  }
-
-  .navbar .logo img {
-    height: 32px;
-  }
-
-  /* Right side nav */
   .nav-right {
+    gap: 10px;
+  }
+
+  .nav-right ul {
     gap: 12px;
   }
 
-  /* Menu list */
-  .nav-right ul {
-    gap: 14px;
-  }
-
   .nav-right ul li a {
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  /* Get Started button */
   .navbar .btn {
-    padding: 8px 14px;
-    font-size: 14px;
-    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 13px;
   }
 
-  /* HERO SECTION */
+  /* HERO */
   .hero {
     flex-direction: column;
     text-align: center;
-    padding: 80px 20px;
+    padding: 80px 16px;
+    min-height: 100vh;
     gap: 40px;
-    min-height: 100vh; /* full screen */
-  }
-
-  .hero .hero-text {
-    max-width: 100%;
   }
 
   .hero h1 {
-    font-size: 36px;
-    line-height: 1.2;
+    font-size: 34px;
   }
 
   .hero p {
     font-size: 16px;
-    margin-bottom: 28px;
   }
 
-  /* Hero buttons */
-  .hero .btn-primary,
-  .hero .btn-secondary {
-    width: 100%;
-    text-align: center;
-  }
-
-  /* Hero image */
   .hero img {
     max-width: 90%;
   }
 
-  /* FEATURES SECTION */
-  .features {
-    padding: 70px 20px;
-  }
-
-  .features-title {
-    font-size: 28px;
-    margin-bottom: 40px;
-  }
-
-  /* Feature cards stack vertically */
+  /* FEATURES */
   .feature-cards {
     flex-direction: column;
-    align-items: center;
-    gap: 25px;
+    gap: 24px;
   }
 
   .feature-card {
