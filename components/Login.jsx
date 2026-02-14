@@ -2,11 +2,11 @@
 
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { useState } from "react"; // ✅ import useState
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false); // ✅ move inside component
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLoginClick = () => {
     router.push("/login");
@@ -29,17 +29,25 @@ export default function Login() {
         </a>
 
         <div className="nav-right">
-          <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-
-          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
-
-          <button className="btn" onClick={handleLoginClick}>
-            Log in
+          {/* Menu toggle button for mobile */}
+          <button
+            className="menu-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            ☰
           </button>
+
+          {/* Navigation menu */}
+          <ul className={`nav-menu ${menuOpen ? "active" : ""}`}>
+            <li><a href="#features" onClick={() => setMenuOpen(false)}>Features</a></li>
+            <li><a href="#about" onClick={() => setMenuOpen(false)}>About</a></li>
+            <li><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></li>
+            <li>
+              <button className="btn" onClick={handleLoginClick}>
+                Log in
+              </button>
+            </li>
+          </ul>
         </div>
       </nav>
 
@@ -52,12 +60,8 @@ export default function Login() {
           </p>
 
           <div className="hero-buttons">
-            <a href="#features" className="btn-primary">
-              Get Started
-            </a>
-            <a href="#contact" className="btn-secondary">
-              Request a Demo
-            </a>
+            <a href="#features" className="btn-primary">Get Started</a>
+            <a href="#contact" className="btn-secondary">Request a Demo</a>
           </div>
         </div>
       </section>
@@ -65,7 +69,6 @@ export default function Login() {
       {/* FEATURES */}
       <section id="features" className="features">
         <h2 className="features-title">Trusted Digital Verification</h2>
-
         <div className="feature-cards">
           <div className="feature-card">
             <img src="img/logo.png" alt="Prevent Certificate Fraud" />
@@ -100,7 +103,6 @@ export default function Login() {
       <section id="contact" className="contact">
         <h2>Contact Us</h2>
         <p>Email: support@trustiQR.com</p>
-
         <div className="social-icons">
           <i className="fa-brands fa-facebook"></i>
           <i className="fa-brands fa-github"></i>
