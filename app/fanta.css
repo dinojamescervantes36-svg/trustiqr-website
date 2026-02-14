@@ -205,61 +205,98 @@
 /* ============================= */
 @media (max-width: 900px) {
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
+    margin: 0;
     overflow-x: hidden;
   }
 
-  /* NAVBAR */
+  /* ================= NAVBAR ================= */
   .navbar {
-    padding: 14px 16px;
+    padding: 12px 14px;
+    flex-wrap: nowrap;
+  }
+
+  .navbar .logo {
+    font-size: 18px;
+    gap: 6px;
+  }
+
+  .navbar .logo img {
+    height: 28px;
   }
 
   .nav-right {
-    gap: 10px;
+    gap: 8px;
   }
 
   .nav-right ul {
-    gap: 12px;
+    gap: 10px;
   }
 
   .nav-right ul li a {
-    font-size: 13px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   .navbar .btn {
-    padding: 7px 12px;
-    font-size: 13px;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
   }
 
-  /* HERO */
+  /* ================= HERO ================= */
   .hero {
     flex-direction: column;
+    justify-content: center;
     text-align: center;
-    padding: 80px 16px;
+    padding: 70px 16px;
+    gap: 30px;
     min-height: 100vh;
-    gap: 40px;
   }
 
   .hero h1 {
-    font-size: 34px;
+    font-size: 30px;
+    line-height: 1.25;
   }
 
   .hero p {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .hero .btn-primary,
+  .hero .btn-secondary {
+    width: 100%;
+    max-width: 320px;
   }
 
   .hero img {
-    max-width: 90%;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
-  /* FEATURES */
+  /* ================= FEATURES ================= */
+  .features {
+    padding: 60px 16px;
+  }
+
+  .features-title {
+    font-size: 26px;
+  }
+
   .feature-cards {
     flex-direction: column;
-    gap: 24px;
+    gap: 22px;
   }
 
   .feature-card {
     width: 100%;
-    max-width: 340px;
+    max-width: 320px;
+    padding: 20px;
   }
 }
