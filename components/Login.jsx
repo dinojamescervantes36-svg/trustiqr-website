@@ -2,9 +2,11 @@
 
 import Head from "next/head";
 import { useRouter } from "next/navigation";
+import { useState } from "react"; // ✅ import useState
 
 export default function Login() {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false); // ✅ move inside component
 
   const handleLoginClick = () => {
     router.push("/login");
@@ -27,17 +29,13 @@ export default function Login() {
         </a>
 
         <div className="nav-right">
-          <ul>
-            <li>
-              <a href="#features">Features</a>
-            </li>
-            <li>
-              <a href="#about">About</a>
-            </li>
-            <li>
-              <a href="#contact">Contact</a>
-            </li>
+          <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
+
+          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
 
           <button className="btn" onClick={handleLoginClick}>
             Log in
@@ -70,28 +68,19 @@ export default function Login() {
 
         <div className="feature-cards">
           <div className="feature-card">
-            <img
-              src="img/logo.png"
-              alt="Prevent Certificate Fraud"
-            />
+            <img src="img/logo.png" alt="Prevent Certificate Fraud" />
             <h3>Prevent Certificate Fraud</h3>
             <p>Ensure your certificates are authentic and secure.</p>
           </div>
 
           <div className="feature-card">
-            <img
-              src="img1/Instantly Verify QR Codes.png"
-              alt="Instant QR Verification"
-            />
+            <img src="img1/Instantly Verify QR Codes.png" alt="Instant QR Verification" />
             <h3>Instantly Verify QR Codes</h3>
             <p>Scan and verify QR codes instantly.</p>
           </div>
 
           <div className="feature-card">
-            <img
-              src="img1/Build Trust & Credibility.png"
-              alt="Build Trust"
-            />
+            <img src="img1/Build Trust & Credibility.png" alt="Build Trust" />
             <h3>Build Trust & Credibility</h3>
             <p>Enhance your institution’s credibility.</p>
           </div>
