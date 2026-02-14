@@ -100,7 +100,7 @@ button:hover {
   display: none;
 }
 /* 🔹 Mobile view adjustments */
-@media (max-width: 480px) {
+@media (max-width: 450px) {
   .auth-container {
     padding: 20px;
     height: 100%;
