@@ -33,7 +33,7 @@ body {
 /* Logo */
 .navbar .logo {
   display: flex;
-  align-items: center;
+  align-items: center;  /* vertical center of text + logo */
   gap: 10px;
   font-weight: 700;
   font-size: 24px;
@@ -44,6 +44,7 @@ body {
 .navbar .logo img {
   height: 42px;
   width: auto;
+  align-items: center;
 }
 
 /* Right side container */
