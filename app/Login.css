@@ -99,3 +99,49 @@ button:hover {
 .hidden {
   display: none;
 }
+/* 🔹 Mobile view adjustments */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 20px;
+    height: 100%;
+  }
+
+  .box {
+    width: 90%; /* full width minus some margin */
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .brand {
+    font-size: 28px;
+    top: 15px;
+    left: 15px;
+  }
+
+  .toggle-password {
+    font-size: 16px;
+    right: 10px;
+  }
+
+  .switch {
+    font-size: 14px;
+    margin-top: 14px;
+  }
+
+  #error-msg {
+    font-size: 13px;
+  }
+}
