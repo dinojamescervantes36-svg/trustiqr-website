@@ -71,7 +71,7 @@ export default function Login() {
         <div className="feature-cards">
           <div className="feature-card">
             <img
-              src="img1/Prevent Certificate Fraud.jpg"
+              src="img/logo.png"
               alt="Prevent Certificate Fraud"
             />
             <h3>Prevent Certificate Fraud</h3>
@@ -80,7 +80,7 @@ export default function Login() {
 
           <div className="feature-card">
             <img
-              src="img1/Instantly Verify QR Codes.jpg"
+              src="img1/Instantly Verify QR Codes.png"
               alt="Instant QR Verification"
             />
             <h3>Instantly Verify QR Codes</h3>
@@ -89,7 +89,7 @@ export default function Login() {
 
           <div className="feature-card">
             <img
-              src="img1/Build Trust & Credibility.jpg"
+              src="img1/Build Trust & Credibility.png"
               alt="Build Trust"
             />
             <h3>Build Trust & Credibility</h3>
