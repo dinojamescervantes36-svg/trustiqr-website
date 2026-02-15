@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { auth } from "@/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import {
   Chart as ChartJS,
@@ -43,6 +43,7 @@ ChartJS.register(
 
 export default function Dashboard() {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -95,12 +96,53 @@ export default function Dashboard() {
         </div>
 
         <ul>
-          <li className="active"><FiHome /> Dashboard</li>
-          <li><FiFilePlus /> Create Certificates</li>
-          <li><FiCheckCircle /> Verify Certificate</li>
-          <li><FiLayers /> Manage Templates</li>
-          <li><FiUsers /> User Accounts</li>
-          <li><FiSettings /> Settings</li>
+          <li
+            onClick={() => router.push("/dashboard")}
+            className={pathname === "/dashboard" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiHome /> Dashboard
+          </li>
+
+          <li
+            onClick={() => router.push("/dashboard/create")}
+            className={pathname === "/dashboard/create" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiFilePlus /> Create Certificates
+          </li>
+
+          <li
+            onClick={() => router.push("/dashboard/verify")}
+            className={pathname === "/dashboard/verify" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiCheckCircle /> Verify Certificate
+          </li>
+
+          <li
+            onClick={() => router.push("/dashboard/templates")}
+            className={pathname === "/dashboard/templates" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiLayers /> Manage Templates
+          </li>
+
+          <li
+            onClick={() => router.push("/dashboard/users")}
+            className={pathname === "/dashboard/users" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiUsers /> User Accounts
+          </li>
+
+          <li
+            onClick={() => router.push("/dashboard/settings")}
+            className={pathname === "/dashboard/settings" ? "active" : ""}
+            style={{ cursor: "pointer" }}
+          >
+            <FiSettings /> Settings
+          </li>
         </ul>
       </aside>
 
@@ -123,10 +165,16 @@ export default function Dashboard() {
           </div>
 
           <div className="card actions">
-            <button className="primary">
+            <button
+              className="primary"
+              onClick={() => router.push("/dashboard/create")}
+            >
               <FiFilePlus /> Issue New Certificate
             </button>
-            <button className="secondary">
+            <button
+              className="secondary"
+              onClick={() => router.push("/dashboard/verify")}
+            >
               <FiCamera /> Scan to Verify
             </button>
           </div>
@@ -159,7 +207,10 @@ export default function Dashboard() {
               <FiUpload size={22} />
               <p>Drag & Drop PDF or Click to Upload</p>
             </div>
-            <button className="secondary">
+            <button
+              className="secondary"
+              onClick={() => router.push("/dashboard/verify")}
+            >
               <FiCamera /> Scan QR Code
             </button>
           </div>
