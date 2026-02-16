@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   FiHome,
@@ -16,12 +16,19 @@ import {
   FiShield,
 } from "react-icons/fi";
 
+import { auth, db } from "@/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+
 export default function SettingsPage() {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+  const [firebaseUser, setFirebaseUser] = useState(null);
+
   const [form, setForm] = useState({
-    name: "Institution Admin",
-    email: "admin@institution.com",
+    name: "",
+    email: "",
     password: "",
     team: "Registrar",
   });
@@ -33,16 +40,57 @@ export default function SettingsPage() {
     facebook: false,
   });
 
+  // 🔐 Load Auth + Firestore user
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        router.replace("/auth");
+        return;
+      }
+
+      setFirebaseUser(user);
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+
+      if (snap.exists()) {
+        setForm({
+          name: snap.data().name || "",
+          email: user.email || "",
+          password: "",
+          team: snap.data().team || "Registrar",
+        });
+      }
+
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const toggleConnection = (provider) =>
     setConnections({ ...connections, [provider]: !connections[provider] });
 
-  const handleSaveProfile = () => {
-    alert(`Saved changes for ${form.name} (${form.email})`);
-    // Here you can add your API/Firebase call to update the user profile
+  // 💾 Save profile to Firestore
+  const handleSaveProfile = async () => {
+    if (!firebaseUser) return;
+
+    try {
+      await updateDoc(doc(db, "users", firebaseUser.uid), {
+        name: form.name,
+        team: form.team,
+        updatedAt: new Date(),
+      });
+
+      alert("Profile updated successfully!");
+    } catch (err) {
+      alert("Failed to update profile");
+    }
   };
+
+  if (loading) return <p>Loading account...</p>;
 
   return (
     <div className="dashboard">
@@ -80,17 +128,16 @@ export default function SettingsPage() {
         </ul>
       </aside>
 
-      {/* ================= MAIN CONTENT ================= */}
+      {/* ================= MAIN ================= */}
       <main className="main">
         <div className="settings-page">
           <h1>User Account</h1>
 
-          {/* ================= PROFILE CARD ================= */}
+          {/* ================= PROFILE ================= */}
           <div className="card">
             <h3><FiUser /> Profile</h3>
 
             <div className="profile-grid">
-              {/* Avatar */}
               <div className="avatar-placeholder">
                 {form.name
                   .split(" ")
@@ -99,7 +146,6 @@ export default function SettingsPage() {
                   .toUpperCase()}
               </div>
 
-              {/* Form */}
               <div className="form">
                 <label>Full Name</label>
                 <input
@@ -112,23 +158,27 @@ export default function SettingsPage() {
                 <input
                   name="email"
                   value={form.email}
-                  onChange={handleChange}
+                  disabled
                 />
 
-                <label>Password</label>
+                <label>New Password</label>
                 <input
                   type="password"
                   name="password"
                   value={form.password}
-                  onChange={handleChange}
-                  placeholder="Enter new password"
+                  placeholder="Managed in Auth"
+                  disabled
                 />
 
                 <label>Default Team</label>
-                <select name="team" value={form.team} onChange={handleChange}>
-                  <option>Registrar</option>
-                  <option>Admin</option>
-                  <option>Verifier</option>
+                <select
+                  name="team"
+                  value={form.team}
+                  onChange={handleChange}
+                >
+                  <option value="Registrar">Registrar</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Verifier">Verifier</option>
                 </select>
 
                 <button className="primary" onClick={handleSaveProfile}>
@@ -138,49 +188,9 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* ================= CONNECTED ACCOUNTS ================= */}
-          <div className="card">
-            <h3><FiLink /> Connected Accounts</h3>
-
-            <div className="connection">
-              <span>Google</span>
-              <button onClick={() => toggleConnection("google")}>
-                {connections.google ? "Disconnect" : "Connect"}
-              </button>
-            </div>
-
-            <div className="connection">
-              <span>Facebook</span>
-              <button onClick={() => toggleConnection("facebook")}>
-                {connections.facebook ? "Disconnect" : "Connect"}
-              </button>
-            </div>
-          </div>
-
-          {/* ================= APPEARANCE ================= */}
-          <div className="card">
-            <h3>Appearance</h3>
-            <div className="appearance">
-              <button
-                className={appearance === "light" ? "active" : ""}
-                onClick={() => setAppearance("light")}
-              >
-                <FiSun /> Light
-              </button>
-
-              <button
-                className={appearance === "dark" ? "active" : ""}
-                onClick={() => setAppearance("dark")}
-              >
-                <FiMoon /> Dark
-              </button>
-            </div>
-          </div>
-
           {/* ================= SECURITY ================= */}
           <div className="card">
             <h3><FiShield /> Security</h3>
-
             <div className="twofa">
               <span>Two-Factor Authentication</span>
               <input

@@ -167,7 +167,7 @@ export default function CreateCertificate() {
                 <option>Bachelor of Science in Electrical Engineering</option>
                 <option>Bachelor of Science in Mechanical Engineering</option>
                 <option>Bachelor of Science in Industrial Engineering</option>
-
+                <option>Bachelor of Science in Mechatrinocs Engineering</option>
                 {/* Education */}
                 <option>Bachelor of Elementary Education</option>
                 <option>Bachelor of Secondary Education – Major in English</option>

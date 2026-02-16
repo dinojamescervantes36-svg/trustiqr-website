@@ -119,11 +119,11 @@ export default function VerifyCertificate() {
             <div className="chart-placeholder">
               <p>Certificate Verifications</p>
               <div className="fake-chart">
-                <div style={{ height: "40%" }}></div>
-                <div style={{ height: "55%" }}></div>
-                <div style={{ height: "70%" }}></div>
-                <div style={{ height: "50%" }}></div>
-                <div style={{ height: "80%" }}></div>
+                <div style={{ height: "" }}></div>
+                <div style={{ height: "" }}></div>
+                <div style={{ height: "" }}></div>
+                <div style={{ height: "" }}></div>
+                <div style={{ height: "" }}></div>
               </div>
             </div>
           </div>

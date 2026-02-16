@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { auth } from "@/firebase";
+import { auth, db } from "@/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useRouter, usePathname } from "next/navigation";
 
 import {
@@ -27,7 +28,6 @@ import {
   FiSettings,
   FiUpload,
   FiCamera,
-  FiActivity,
   FiAward,
 } from "react-icons/fi";
 
@@ -44,13 +44,29 @@ ChartJS.register(
 export default function Dashboard() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
+  // 🔐 Load Auth + Firestore profile
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) router.push("/");
-      else setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        router.replace("/");
+        return;
+      }
+
+      const snap = await getDoc(doc(db, "users", firebaseUser.uid));
+
+      setUser({
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        ...snap.data(), // name, institution, role, etc.
+      });
+
+      setLoading(false);
     });
+
     return () => unsubscribe();
   }, [router]);
 
@@ -59,14 +75,15 @@ export default function Dashboard() {
     router.push("/");
   };
 
-  if (!user) return <div style={{ padding: 40 }}>Loading...</div>;
+  if (loading) return <div style={{ padding: 40 }}>Loading dashboard...</div>;
 
+  // 📊 Chart data
   const lineData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     datasets: [
       {
         label: "Certificates Issued",
-        data: [10, 20, 15, 25, 18, 30],
+        data: [],
         borderColor: "#1e8e3e",
         backgroundColor: "rgba(30,142,62,0.1)",
         tension: 0.4,
@@ -79,7 +96,7 @@ export default function Dashboard() {
     labels: ["Issued", "Pending", "Fraud"],
     datasets: [
       {
-        data: [1245, 87, 3],
+        data: [0, 0, 0],
         backgroundColor: ["#1e8e3e", "#3b82f6", "#ef4444"],
         borderWidth: 0,
       },
@@ -96,51 +113,27 @@ export default function Dashboard() {
         </div>
 
         <ul>
-          <li
-            onClick={() => router.push("/dashboard")}
-            className={pathname === "/dashboard" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard")} className={pathname === "/dashboard" ? "active" : ""}>
             <FiHome /> Dashboard
           </li>
 
-          <li
-            onClick={() => router.push("/dashboard/create")}
-            className={pathname === "/dashboard/create" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard/create")} className={pathname === "/dashboard/create" ? "active" : ""}>
             <FiFilePlus /> Create Certificates
           </li>
 
-          <li
-            onClick={() => router.push("/dashboard/verify")}
-            className={pathname === "/dashboard/verify" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard/verify")} className={pathname === "/dashboard/verify" ? "active" : ""}>
             <FiCheckCircle /> Verify Certificate
           </li>
 
-          <li
-            onClick={() => router.push("/dashboard/templates")}
-            className={pathname === "/dashboard/templates" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard/templates")} className={pathname === "/dashboard/templates" ? "active" : ""}>
             <FiLayers /> Manage Templates
           </li>
 
-          <li
-            onClick={() => router.push("/dashboard/users")}
-            className={pathname === "/dashboard/users" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard/users")} className={pathname === "/dashboard/users" ? "active" : ""}>
             <FiUsers /> User Accounts
           </li>
 
-          <li
-            onClick={() => router.push("/dashboard/settings")}
-            className={pathname === "/dashboard/settings" ? "active" : ""}
-            style={{ cursor: "pointer" }}
-          >
+          <li onClick={() => router.push("/dashboard/settings")} className={pathname === "/dashboard/settings" ? "active" : ""}>
             <FiSettings /> Settings
           </li>
         </ul>
@@ -149,7 +142,7 @@ export default function Dashboard() {
       {/* Main */}
       <main className="main">
         <div className="topbar">
-          <h1>Welcome, {user.email}</h1>
+          <h1>Welcome, {user.name}!</h1>
           <button className="logout" onClick={handleLogout}>
             Logout
           </button>
@@ -165,22 +158,16 @@ export default function Dashboard() {
           </div>
 
           <div className="card actions">
-            <button
-              className="primary"
-              onClick={() => router.push("/dashboard/create")}
-            >
+            <button className="primary" onClick={() => router.push("/dashboard/create")}>
               <FiFilePlus /> Issue New Certificate
             </button>
-            <button
-              className="secondary"
-              onClick={() => router.push("/dashboard/verify")}
-            >
+            <button className="secondary" onClick={() => router.push("/dashboard/verify")}>
               <FiCamera /> Scan to Verify
             </button>
           </div>
         </div>
 
-        {/* Middle Section */}
+        {/* Middle */}
         <div className="grid">
           <div className="card">
             <h3>Issuance Trends</h3>
@@ -191,46 +178,9 @@ export default function Dashboard() {
 
           <div className="card">
             <h3>Recent Activity</h3>
-            <div className="activity">
-              <p><FiAward /> Issued Degree Certificate</p>
-              <p><FiCheckCircle /> Verified Course Completion</p>
-              <p><FiUsers /> Employee ID Created</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="bottom-grid">
-          <div className="card">
-            <h3>Quick Verify</h3>
-            <div className="verify-box">
-              <FiUpload size={22} />
-              <p>Drag & Drop PDF or Click to Upload</p>
-            </div>
-            <button
-              className="secondary"
-              onClick={() => router.push("/dashboard/verify")}
-            >
-              <FiCamera /> Scan QR Code
-            </button>
-          </div>
-
-          <div className="card">
-            <h3>Certificate Templates</h3>
-            <div className="templates">
-              <div className="template">
-                <FiAward size={28} />
-                <p>Academic Degree</p>
-              </div>
-              <div className="template">
-                <FiAward size={28} />
-                <p>Course Completion</p>
-              </div>
-              <div className="template">
-                <FiAward size={28} />
-                <p>Employee ID</p>
-              </div>
-            </div>
+            <p><FiAward /> Issued Degree Certificate</p>
+            <p><FiCheckCircle /> Verified Course Completion</p>
+            <p><FiUsers /> Employee ID Created</p>
           </div>
         </div>
       </main>
