@@ -107,7 +107,7 @@ export default function SettingsPage() {
           </li>
 
           <li onClick={() => router.push("/dashboard/create")}>
-            <FiFilePlus /> Create Certificates
+            <FiFilePlus /> Create New Certificates
           </li>
 
           <li onClick={() => router.push("/dashboard/verify")}>
